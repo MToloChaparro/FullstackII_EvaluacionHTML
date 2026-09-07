@@ -1,0 +1,267 @@
+/* ========================================
+   LOGIN ECOGARZONES - Estilos coherentes
+   ======================================== */
+
+/* Importar variables desde el proyecto principal */
+:root {
+    --verde-principal: #5a8a5a;
+    --verde-oscuro: #4a7a4a;
+    --verde-claro: #7aaa7a;
+    --verde-bg: #f0f5ed;
+    --fondo: #f9f7f5;
+    --texto-oscuro: #2d3a2d;
+    --texto-claro: #5a6a5a;
+    --blanco: #ffffff;
+    --gris-claro: #e8ece8;
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.04);
+    --sombra-hover: 0 8px 30px rgba(90, 138, 90, 0.15);
+    --sombra-boton: 0 4px 15px rgba(90, 138, 90, 0.3);
+    --border-radius: 20px;
+    --border-radius-boton: 30px;
+    --transition: all 0.3s ease;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   CUERPO - Fondo degradado con colores de la marca
+   ======================================== */
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, var(--verde-bg) 0%, var(--verde-principal) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL
+   ======================================== */
+.container {
+    width: 100%;
+    max-width: 420px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* ========================================
+   TARJETA DE LOGIN
+   ======================================== */
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 45px 38px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(90, 138, 90, 0.2);
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+.logo-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo-container img {
+    height: 50px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.logo-container img:hover {
+    transform: scale(1.05);
+}
+
+/* ========================================
+   TÍTULO
+   ======================================== */
+h1 {
+    color: var(--texto-oscuro);
+    font-weight: 700;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--verde-principal), var(--verde-oscuro));
+    margin: 10px auto 0;
+    border-radius: 4px;
+}
+
+/* ========================================
+   FORMULARIO
+   ======================================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ========================================
+   CAMPOS DE ENTRADA
+   ======================================== */
+input {
+    padding: 14px 20px;
+    border: 2px solid var(--gris-claro);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    transition: var(--transition);
+    background: #f7fafc;
+    outline: none;
+    color: var(--texto-oscuro);
+}
+
+input:focus {
+    border-color: var(--verde-principal);
+    background: var(--blanco);
+    box-shadow: 0 0 0 4px rgba(90, 138, 90, 0.12);
+}
+
+input::placeholder {
+    color: #a0aec0;
+    font-weight: 300;
+}
+
+/* ========================================
+   BOTÓN DE ENVÍO
+   ======================================== */
+button {
+    padding: 15px;
+    background: linear-gradient(135deg, var(--verde-principal), var(--verde-oscuro));
+    color: var(--blanco);
+    border: none;
+    border-radius: var(--border-radius-boton);
+    font-size: 17px;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de brillo al pasar el mouse */
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-boton);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* ========================================
+   TEXTO Y ENLACES
+   ======================================== */
+p {
+    text-align: center;
+    margin-top: 25px;
+    color: var(--texto-claro);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+a {
+    color: var(--verde-principal);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+}
+
+/* Línea decorativa en enlaces */
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, var(--verde-principal), var(--verde-oscuro));
+    transition: var(--transition);
+    border-radius: 2px;
+}
+
+a:hover {
+    color: var(--verde-oscuro);
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    input,
+    button {
+        font-size: 15px;
+        padding: 12px 16px;
+    }
+    
+    .logo-container img {
+        height: 40px;
+    }
+}
