@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecogarzones · Panel Administrador - Personal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/adminEcogarzones.css" />
+    <style>
+        
+        .rol-badge {
+            display: inline-block;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .rol-1 { background: #e8f5e9; color: #2e7d32; }
+        .rol-2 { background: #e3f2fd; color: #1565c0; }
+        .rol-5 { background: #fff3e0; color: #e65100; }
+        .rol-6 { background: #f3e5f5; color: #7b1fa2; }
+        .rol-7 { background: #fce4ec; color: #c62828; }
+        .rol-3 { background: #e0f7fa; color: #00695c; }
+        .rol-4 { background: #fff8e1; color: #f57f17; }
+        
+        .estado-disponible { background: #e8f5e9; color: #2e7d32; }
+        .estado-ocupado { background: #fff3e0; color: #e65100; }
+        .estado-vacaciones { background: #e3f2fd; color: #1565c0; }
+        .estado-desvinculado { background: #fce4ec; color: #c62828; }
+
+        .staff-table td {
+            vertical-align: middle;
+        }
+
+        .valor-hora {
+            font-weight: 700;
+            color: var(--verde-principal);
+        }
+
+        .telefono-link {
+            color: var(--texto-claro);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .telefono-link:hover {
+            color: var(--verde-principal);
+        }
+
+
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="images/logoEcogarzones.png" alt="Ecogarzones" class="logoEcogarzones" />
+        <h2>Ecogarzones</h2>
+        <small>Panel de Administración</small>
+    </div>
+
+    <ul class="sidebar-menu">
+        <li>
+            <a href="adminEcogarzones.html">
+                Eventos
+            </a>
+        </li>
+        <li>
+            <a href="admin_inventarioEcogarzones.html">
+                Inventario
+            </a>
+        </li>
+        <li>
+            <a href="admin_personalEcogarzones.html" class="active">
+                Personal Disponible
+            </a>
+        </li>
+        <li>
+            <a href="admin_incidenciasEcogarzones.html">
+                Reporte de Incidencias
+            </a>
+        </li>
+        <li>
+            <a href="indexadmin_Ecogarzones.html">
+                Inicio
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <a href="LogEcogarzones.html">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+</aside>
+
+    <main class="main-content">
+
+        <header class="admin-header">
+            <div class="page-title">
+                <h1>Gestión de Personal</h1>
+                <p>Administra el personal disponible para eventos</p>
+            </div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchStaff" placeholder="Buscar personal..." onkeyup="filtrarPersonal()" />
+                </div>
+                <div class="user-info">
+                    <div class="avatar">A</div>
+                    <div>
+                        <div class="user-name">Administrador</div>
+                        <div class="user-role">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalStaff">7</h3>
+                        <p>Total Personal</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #c8e6c9; color: #1b5e20;">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="staffDisponible">4</h3>
+                        <p>Disponibles</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fff3e0; color: #e65100;">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="staffOcupado">1</h3>
+                        <p>Ocupados</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fce4ec; color: #c62828;">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="staffDesvinculado">1</h3>
+                        <p>Desvinculados</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-bar">
+                <div class="filters-left">
+                    <label for="filterRol">Filtrar por rol:</label>
+                    <select id="filterRol" onchange="filtrarPersonal()">
+                        <option value="todos">Todos</option>
+                        <option value="1">Garzon</option>
+                        <option value="2">Bartender / Sommelier</option>
+                        <option value="5">Cocinero</option>
+                        <option value="6">Coordinador</option>
+                        <option value="7">Copero</option>
+                        <option value="3">Animador</option>
+                        <option value="4">Otros</option>
+                    </select>
+
+                    <label for="filterEstadoStaff">Estado:</label>
+                    <select id="filterEstadoStaff" onchange="filtrarPersonal()">
+                        <option value="todos">Todos</option>
+                        <option value="1">Disponible</option>
+                        <option value="2">Ocupado</option>
+                        <option value="3">Vacaciones</option>
+                        <option value="4">Desvinculado</option>
+                    </select>
+                </div>
+                <div class="filters-right">
+                    <button class="btn-primary" onclick="agregarPersonal()">
+                        <i class="fas fa-user-plus"></i> Agregar Personal
+                    </button>
+                    <button class="btn-secondary" onclick="recargarDatos()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="eventos-table staff-table" id="staffTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Completo</th>
+                            <th>RUT</th>
+                            <th>Rol</th>
+                            <th>Teléfono</th>
+                            <th>Valor Hora</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <span>Mostrando <span id="inicioMostrar">1</span> - <span id="finMostrar">5</span> de <span id="totalMostrar">7</span> personal</span>
+                <div class="pagination-buttons">
+                    <button onclick="cambiarPagina('prev')" id="btnPrev" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="paginaActual">1</span>
+                    <button onclick="cambiarPagina('next')" id="btnNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div class="modal" id="detalleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-circle"></i> Detalle del Personal</h2>
+                <button class="modal-close" onclick="cerrarDetalle()">&times;</button>
+            </div>
+            <div class="modal-body" id="detalleBody"></div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarDetalle()">Cerrar</button>
+                <button class="btn-primary" onclick="editarPersonal()">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editarModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Editar Personal</h2>
+                <button class="modal-close" onclick="cerrarEditar()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarStaff">
+                    <input type="hidden" id="editStaffId" />
+                    <div class="form-group">
+                        <label for="editRol">Rol:</label>
+                        <select id="editRol" required>
+                            <option value="1">Garzon</option>
+                            <option value="2">Bartender / Sommelier</option>
+                            <option value="5">Cocinero</option>
+                            <option value="6">Coordinador</option>
+                            <option value="7">Copero</option>
+                            <option value="3">Animador</option>
+                            <option value="4">Otros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editValorHora">Valor Hora ($):</label>
+                        <input type="number" id="editValorHora" required min="5000" step="500" />
+                    </div>
+                    <div class="form-group">
+                        <label for="editEstadoStaff">Estado:</label>
+                        <select id="editEstadoStaff" required>
+                            <option value="1">Disponible</option>
+                            <option value="2">Ocupado</option>
+                            <option value="3">Vacaciones</option>
+                            <option value="4">Desvinculado</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="motivoDiv" style="display: none;">
+                        <label for="editMotivo">Motivo de Desvinculación:</label>
+                        <textarea id="editMotivo" rows="2" placeholder="Motivo de desvinculación..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarEditar()">Cancelar</button>
+                <button class="btn-primary" onclick="guardarCambiosStaff()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script src="js/admin_personal.js"></script>
+
+</body>
+</html>

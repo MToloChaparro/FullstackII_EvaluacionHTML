@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecogarzones · Panel Administrador - Inventario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/adminEcogarzones.css" />
+    <style>
+
+        .insumo-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .tipo-muebleria { background: #e8f5e9; color: #2e7d32; }
+        .tipo-carnes { background: #fce4ec; color: #c62828; }
+        .tipo-bebidas_gaseosas { background: #e3f2fd; color: #1565c0; }
+        .tipo-utensilios { background: #fff3e0; color: #e65100; }
+        .tipo-bebidas_alcoholicas { background: #f3e5f5; color: #7b1fa2; }
+        .tipo-alimentos_perecibles { background: #fff8e1; color: #f57f17; }
+        .tipo-pasteleria { background: #e0f7fa; color: #00695c; }
+        .tipo-uniformes_y_epp { background: #ede7f6; color: #5e35b1; }
+        .tipo-ambientacion_y_deco { background: #fce4ec; color: #c62828; }
+        
+        .estado-disponible { background: #e8f5e9; color: #2e7d32; }
+        .estado-incompleto { background: #fff3e0; color: #e65100; }
+        .estado-agotado { background: #fce4ec; color: #c62828; }
+        .estado-reposicion { background: #e3f2fd; color: #1565c0; }
+        
+        .cantidad-cell {
+            font-weight: 600;
+            color: var(--texto-oscuro);
+        }
+        
+        .unidad-text {
+            font-size: 11px;
+            color: var(--texto-gris);
+            margin-left: 4px;
+        }
+        
+        .precio-cell {
+            font-weight: 700;
+            color: var(--verde-principal);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .inventario-table td {
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        
+        .inventario-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .modal-content.modal-lg {
+            max-width: 900px;
+        }
+        
+        .inventario-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .inventario-detail-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            margin: 16px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--verde-bg);
+            padding-bottom: 6px;
+        }
+        
+        .inventario-detail-section p {
+            font-size: 13px;
+            color: var(--texto-oscuro);
+            margin: 4px 0;
+            line-height: 1.6;
+        }
+        
+        .inventario-detail-section p strong {
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+ <aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="images/logoEcogarzones.png" alt="Ecogarzones" class="logoEcogarzones" />
+        <h2>Ecogarzones</h2>
+        <small>Panel de Administración</small>
+    </div>
+
+    <ul class="sidebar-menu">
+        <li>
+            <a href="adminEcogarzones.html">
+                Eventos
+            </a>
+        </li>
+        <li>
+            <a href="admin_inventarioEcogarzones.html" class="active">
+                Inventario
+            </a>
+        </li>
+        <li>
+            <a href="admin_personalEcogarzones.html">
+                Personal Disponible
+            </a>
+        </li>
+        <li>
+            <a href="admin_incidenciasEcogarzones.html">
+                Reporte de Incidencias
+            </a>
+        </li>
+        <li>
+            <a href="indexadmin_Ecogarzones.html">
+                Inicio
+            </a>
+        </li>
+    </ul>
+
+        <div class="sidebar-footer">
+            <a href="LogEcogarzones.html">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="admin-header">
+            <div class="page-title">
+                <h1>Gestión de Inventario</h1>
+                <p>Administra los insumos y materiales disponibles</p>
+            </div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInsumo" placeholder="Buscar insumo..." onkeyup="filtrarInventario()" />
+                </div>
+                <div class="user-info">
+                    <div class="avatar">A</div>
+                    <div>
+                        <div class="user-name">Administrador</div>
+                        <div class="user-role">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32;">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalInsumos">21</h3>
+                        <p>Total Insumos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="insumosDisponibles">20</h3>
+                        <p>Disponibles</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fff3e0; color: #e65100;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="insumosIncompletos">1</h3>
+                        <p>Incompletos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fce4ec; color: #c62828;">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="insumosAgotados">0</h3>
+                        <p>Agotados</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-bar">
+                <div class="filters-left">
+                    <label for="filterTipoInsumo">Tipo de Insumo:</label>
+                    <select id="filterTipoInsumo" onchange="filtrarInventario()">
+                        <option value="todos">Todos</option>
+                        <option value="MUEBLERIA">Mueblería</option>
+                        <option value="CARNES">Carnes</option>
+                        <option value="BEBIDAS_GASEOSAS">Bebidas Gaseosas</option>
+                        <option value="UTENSILIOS">Utensilios</option>
+                        <option value="BEBIDAS_ALCOHOLICAS">Bebidas Alcohólicas</option>
+                        <option value="ALIMENTOS_PERECIBLES">Alimentos Perecibles</option>
+                        <option value="PASTELERIA">Pastelería</option>
+                        <option value="UNIFORMES_Y_EPP">Uniformes y EPP</option>
+                        <option value="AMBIENTACION_Y_DECO">Ambientación y Decoración</option>
+                    </select>
+
+                    <label for="filterEstadoInsumo">Estado:</label>
+                    <select id="filterEstadoInsumo" onchange="filtrarInventario()">
+                        <option value="todos">Todos</option>
+                        <option value="DISPONIBLE">Disponible</option>
+                        <option value="INCOMPLETO">Incompleto</option>
+                        <option value="AGOTADO">Agotado</option>
+                        <option value="EN_REPOSICION">En Reposición</option>
+                    </select>
+                </div>
+                <div class="filters-right">
+                    <button class="btn-primary" onclick="agregarInsumo()">
+                        <i class="fas fa-plus-circle"></i> Agregar Insumo
+                    </button>
+                    <button class="btn-secondary" onclick="exportarInventario()">
+                        <i class="fas fa-file-export"></i> Exportar
+                    </button>
+                    <button class="btn-secondary" onclick="recargarInventario()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="eventos-table inventario-table" id="inventarioTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del Insumo</th>
+                                <th>Tipo</th>
+                                <th>Cantidad</th>
+                                <th>Precio Costo</th>
+                                <th>Valor Total</th>
+                                <th>Estado</th>
+                                <th>Proveedor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventarioBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <span>Mostrando <span id="inicioMostrar">1</span> - <span id="finMostrar">5</span> de <span id="totalMostrar">21</span> insumos</span>
+                <div class="pagination-buttons">
+                    <button onclick="cambiarPagina('prev')" id="btnPrev" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="paginaActual">1</span>
+                    <button onclick="cambiarPagina('next')" id="btnNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div class="modal" id="detalleModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2><i class="fas fa-box-open"></i> Detalle del Insumo</h2>
+                <button class="modal-close" onclick="cerrarDetalle()">&times;</button>
+            </div>
+            <div class="modal-body" id="detalleBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarDetalle()">Cerrar</button>
+                <button class="btn-primary" onclick="abrirEditar()" id="btnEditarInsumo">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editarModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Editar Insumo</h2>
+                <button class="modal-close" onclick="cerrarEditar()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarInsumo">
+                    <input type="hidden" id="editInsumoId" />
+                    <div class="form-group">
+                        <label for="editNombre">Nombre del Insumo:</label>
+                        <input type="text" id="editNombre" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="editTipo">Tipo de Insumo:</label>
+                        <select id="editTipo" required>
+                            <option value="MUEBLERIA">Mueblería</option>
+                            <option value="CARNES">Carnes</option>
+                            <option value="BEBIDAS_GASEOSAS">Bebidas Gaseosas</option>
+                            <option value="UTENSILIOS">Utensilios</option>
+                            <option value="BEBIDAS_ALCOHOLICAS">Bebidas Alcohólicas</option>
+                            <option value="ALIMENTOS_PERECIBLES">Alimentos Perecibles</option>
+                            <option value="PASTELERIA">Pastelería</option>
+                            <option value="UNIFORMES_Y_EPP">Uniformes y EPP</option>
+                            <option value="AMBIENTACION_Y_DECO">Ambientación y Decoración</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCantidad">Cantidad:</label>
+                        <input type="number" id="editCantidad" min="0" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="editUnidad">Unidad de Medida:</label>
+                        <select id="editUnidad" required>
+                            <option value="UNIDADES">Unidades</option>
+                            <option value="KILOGRAMOS">Kilogramos</option>
+                            <option value="LITROS">Litros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPrecio">Precio Costo Unitario ($):</label>
+                        <input type="number" id="editPrecio" min="0" step="0.01" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="editEstado">Estado:</label>
+                        <select id="editEstado" required>
+                            <option value="DISPONIBLE">Disponible</option>
+                            <option value="INCOMPLETO">Incompleto</option>
+                            <option value="AGOTADO">Agotado</option>
+                            <option value="EN_REPOSICION">En Reposición</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editProveedor">Proveedor:</label>
+                        <input type="text" id="editProveedor" placeholder="Nombre del proveedor" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarEditar()">Cancelar</button>
+                <button class="btn-primary" onclick="guardarCambiosInsumo()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin_inventario.js"></script>
+</body>
+</html>

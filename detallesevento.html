@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ecogarzones - Detalles del Evento</title>
+    <link rel="stylesheet" href="css/estilo_pedirservicio_detalleevento.css">
+</head>
+
+<body>
+
+<div class="form-card">
+    <h1>Detalles del Evento</h1>
+
+    <h1>1. Ubicación y Duración del Evento</h1>
+    <p>Ingrese donde se realizará el evento</p>
+
+    <form>
+        <div class="form-group">
+            <label for="dirección">Dirección del Evento:</label>
+            <input type="text" id="dirección" name="dirección">
+        </div>
+
+        <div class="form-group">
+            <label for="comuna">Comuna:</label>
+            <input type="text" id="comuna" name="comuna">
+        </div>
+
+        <div class="form-group">
+            <label for="region">Región:</label>
+            <input type="text" id="region" name="region">
+        </div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha del Evento:</label>
+            <input type="date" id="fecha" name="fecha">
+        </div>
+
+        <div class="form-group">
+            <label for="h_inicio">Hora de inicio:</label>
+            <input type="time" id="h_inicio" name="h_inicio">
+        </div>
+
+        <div class="form-group">
+            <label for="h_fin">Hora de fin:</label>
+            <input type="time" id="h_fin" name="h_fin">
+        </div>
+
+        <div class="form-group">
+            <label for="nombre_evento">Nombre del Evento:</label>
+            <input type="text" id="nombre_evento" name="nombre_evento">
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción del Evento:</label>
+            <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="numinvi">Número de invitados:</label>
+            <input type="number" id="numinvi" name="numinvi" min="1">
+        </div>
+
+<section class="contenedor-detalles">
+
+
+  <h1>2. Tipo de Evento</h1>
+  <p>Seleccione el tipo de evento (determina los requerimientos tributarios y de cotización):</p>
+
+  <fieldset class="grupo-opciones">
+    <legend><strong>Categoría del Evento:</strong></legend><br>
+
+    <input type="radio" id="tipo_familiar" name="tipo_evento" value="Familiar" checked onclick="evaluarCamposLegales()">
+    <label for="tipo_familiar">Evento Familiar / Particular</label><br><br>
+
+    <input type="radio" id="tipo_empresarial" name="tipo_evento" value="Empresarial" onclick="evaluarCamposLegales()">
+    <label for="tipo_empresarial">Evento Empresarial / Corporativo</label><br><br>
+
+    <input type="radio" id="tipo_municipal" name="tipo_evento" value="Municipal" onclick="evaluarCamposLegales()">
+    <label for="tipo_municipal">Evento Estatal / Municipal</label><br>
+  </fieldset>
+
+  <div id="seccion_legal" style="display: none; margin-top: 15px; padding: 15px; border: 1px solid #ccc; background-color: #f9f9f9;">
+    <h3 id="titulo_legal">Datos de Facturación y Marco Legal</h3>
+    <p><small>Información requerida para la emisión de facturas electrónicas, licitaciones y Ley de Transparencia.</small></p>
+
+    <label for="razon_social">Razón Social / Institución:</label><br>
+    <input type="text" id="razon_social" name="razon_social" placeholder="Ej: Empresa SpA"><br><br>
+
+    <label for="rut_empresa">RUT Empresa:</label><br>
+    <input type="text" id="rut_empresa" name="rut_empresa" placeholder="76.123.456-7"><br><br>
+
+    <label for="giro">Giro Comercial / Área Municipal:</label><br>
+    <input type="text" id="giro" name="giro" placeholder="Ej: Servicios / DIDECO / Eventos comunitarios"><br><br>
+
+    <div id="campo_oc" style="display: none;">
+      <label for="num_orden_compra">N° Orden de Compra (Mercado Público) / Decreto:</label><br>
+      <input type="text" id="num_orden_compra" name="num_orden_compra" placeholder="Ej: OC-4588-2026 / Dec. Exento N°123"><br><br>
+    </div>
+  </div>
+
+
+  <h1>3. Personal Requerido</h1>
+  <p>Seleccione los perfiles e indique las cantidades requeridas (Mínimo 1 perfil):</p>
+
+  <fieldset class="grupo-personal">
+    <legend><strong>Dotación de Servicio:</strong></legend><br>
+
+    <div class="opcion-personal">
+      <input type="checkbox" id="p_garzon" name="personal[]" value="Garzones" onclick="validarPersonal()">
+      <label for="p_garzon"><strong>Garzones / Meseros</strong></label>
+      <input type="number" name="cant_garzones" min="1" placeholder="Cantidad" style="width: 80px;"><br><br>
+    </div>
+
+    <div class="opcion-personal">
+      <input type="checkbox" id="p_bartender" name="personal[]" value="Bartender" onclick="validarPersonal()">
+      <label for="p_bartender"><strong>Bartenders / Mixólogos</strong></label>
+      <input type="number" name="cant_bartenders" min="1" placeholder="Cantidad" style="width: 80px;"><br><br>
+    </div>
+
+    <div class="opcion-personal">
+      <input type="checkbox" id="p_copero" name="personal[]" value="Copero" onclick="validarPersonal()">
+      <label for="p_copero"><strong>Copero / Personal de Lavado</strong></label>
+      <input type="number" name="cant_coperos" min="1" placeholder="Cantidad" style="width: 80px;"><br><br>
+    </div>
+
+    <div class="opcion-personal">
+      <input type="checkbox" id="p_animador" name="personal[]" value="Animador" onclick="validarPersonal()">
+      <label for="p_animador"><strong>Animador / Presentador</strong></label>
+      <input type="number" name="cant_animadores" min="1" placeholder="Cantidad" style="width: 80px;">
+      <small><i>*(El valor varía en función del tipo y perfil del animador)*</i></small><br><br>
+    </div>
+
+    <div class="opcion-personal">
+      <input type="checkbox" id="p_cocina" name="personal[]" value="Cocinero" onclick="validarPersonal()">
+      <label for="p_cocina"><strong>Cocinero / Personal de Cocina</strong></label>
+      <input type="number" id="cant_cocina" name="cant_cocineros" min="1" placeholder="Cantidad" style="width: 80px;">
+      <small><i>*(Tarifa operativa: Se sugiere 1 cocinero por cada 40 invitados)*</i></small><br><br>
+    </div>
+
+    <p id="msg_error_personal" style="color: rgb(172, 7, 7); display: none;">ERROR: Debe seleccionar al menos un tipo de personal para continuar.</p>
+  </fieldset>
+
+</section>
+
+<h1>4. Menú del Evento</h1>
+<p>Seleccione las opciones de menú e indique la cantidad de platos requeridos para cada uno:</p>
+
+<fieldset>
+  <legend><strong>Opciones de Menú Disponibles</strong></legend><br>
+
+  <strong>Menús Carnívoros:</strong><br><br>
+  
+  <input type="checkbox" id="menu_c1" name="menu_c1_activo">
+  <label for="menu_c1"><strong>Menú Carnes N°1:</strong> Consomé de Pollo + Carne Mechada con Puré + Cheesecake de maracuyá/frutos del bosque</label>
+  <br>
+  <label for="cant_c1">Cantidad de platos:</label>
+  <input type="number" id="cant_c1" name="cant_c1" min="1" placeholder="Ej: 20"><br><br>
+
+  <input type="checkbox" id="menu_c2" name="menu_c2_activo">
+  <label for="menu_c2"><strong>Menú Carnes N°2:</strong> Consomé de Pollo + Lomo a lo Pobre con Pastelera de Choclo y Salsa de Champiñones + Cheesecake de maracuyá/frutos del bosque</label>
+  <br>
+  <label for="cant_c2">Cantidad de platos:</label>
+  <input type="number" id="cant_c2" name="cant_c2" min="1" placeholder="Ej: 15"><br><br>
+
+
+  <strong>Menús Vegetarianos:</strong><br><br>
+
+  <input type="checkbox" id="menu_v1" name="menu_v1_activo">
+  <label for="menu_v1"><strong>Menú Vegetariano N°1:</strong> Gnocchis en salsa casera de zanahoria + Pastelera de Choclo y Salsa de Champiñones + flan de remolacha</label>
+  <br>
+  <label for="cant_v1">Cantidad de platos:</label>
+  <input type="number" id="cant_v1" name="cant_v1" min="1" placeholder="Ej: 5"><br><br>
+
+  <input type="checkbox" id="menu_v2" name="menu_v2_activo">
+  <label for="menu_v2"><strong>Menú Vegetariano N°2:</strong> Ceviche de champiñones + Pasta con crema de champiñones + soufllé tradicional</label>
+  <br>
+  <label for="cant_v2">Cantidad de platos:</label>
+  <input type="number" id="cant_v2" name="cant_v2" min="1" placeholder="Ej: 5"><br><br>
+
+
+  <strong>Menús Veganos:</strong><br><br>
+
+  <input type="checkbox" id="menu_vg1" name="menu_vg1_activo">
+  <label for="menu_vg1"><strong>Menú Vegano N°1:</strong> Bosque de lechuga + Pastelera de Choclo sin Lácteos con champiñones salteados + Flan de remolacha</label>
+  <br>
+  <label for="cant_vg1">Cantidad de platos:</label>
+  <input type="number" id="cant_vg1" name="cant_vg1" min="1" placeholder="Ej: 3"><br><br>
+
+  <input type="checkbox" id="menu_vg2" name="menu_vg2_activo">
+  <label for="menu_vg2"><strong>Menú Vegano N°2:</strong> Ensalada de quinoa + Pastas con vegetales asados + Flan de remolacha</label>
+  <br>
+  <label for="cant_vg2">Cantidad de platos:</label>
+  <input type="number" id="cant_vg2" name="cant_vg2" min="1" placeholder="Ej: 2"><br>
+
+</fieldset>
+    
+
+<h1>5. Tipo de Barra y Servicio de Coctelería</h1>
+<p>Seleccione la modalidad de servicio de bar que requiere para su evento:</p>
+
+<fieldset>
+  <legend><strong>Modalidad de Barra:</strong></legend><br>
+
+  <input type="radio" id="barra_libre" name="modalidad_barra" value="barra_libre" required>
+  <label for="barra_libre"><strong>Barra Libre Tradicional:</strong> Coctelería clásica sin límite durante las horas acordadas.</label><br><br>
+
+  <input type="radio" id="barra_autor" name="modalidad_barra" value="cocteleria_autor">
+  <label for="barra_autor"><strong>Barra de Coctelería de Autor / Premium:</strong> Tragos de especialidad, destilados reserva y mixología.</label><br><br>
+
+  <input type="radio" id="barra_consumo" name="modalidad_barra" value="por_consumo">
+  <label for="barra_consumo"><strong>Barra por Consumo / Depósito:</strong> Monto fijo cargado previamente en consumo de tragos.</label><br><br>
+
+  <input type="radio" id="barra_solo_personal" name="modalidad_barra" value="solo_servicio">
+  <label for="barra_solo_personal"><strong>Solo Servicio (El cliente pone los insumos):</strong> Ecogarzones provee solo el bartender y sus herramientas.</label><br><br>
+
+  <input type="radio" id="barra_sin_alcohol" name="modalidad_barra" value="mocktails">
+  <label for="barra_sin_alcohol"><strong>Barra de Mocktails / Sin Alcohol:</strong> Coctelería fruta natural, jugos y bebidas para eventos familiares o corporativos.</label><br>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend><strong>Opciones Adicionales de Barra / Menú:</strong></legend><br>
+
+    <div class="opcion-extra">
+        <input type="checkbox" id="extra_cristaleria_2" name="extras_barra[]" value="cristaleria">
+        <label for="extra_cristaleria_2">
+            <strong>Arriendo de Cristalería</strong> (Copas, Vasos Highball, Vasos Rocks) - Costo Adicional
+        </label>
+    </div>
+
+    <div class="opcion-extra">
+        <input type="checkbox" id="extra_hielo_2" name="extras_barra[]" value="hielo_insumos">
+        <label for="extra_hielo_2">
+            <strong>Suministro de Hielo e Insumos Básicos</strong> (Frutas, Hierbas, Sorbetes ecológicos) - Costo Adicional
+        </label>
+    </div>
+
+    <div class="opcion-extra">
+        <input type="checkbox" id="extra_mueble_2" name="extras_barra[]" value="barra_movil">
+        <label for="extra_mueble_2">
+            <strong>Mueble de Barra Móvil</strong> (Estructura física para el evento) - Costo Adicional
+        </label>
+    </div>
+
+    <div class="opcion-extra">
+        <input type="checkbox" id="extra_cerveza_2" name="extras_barra[]" value="chopp_cerveza">
+        <label for="extra_cerveza_2">
+            <strong>Estación de Cerveza / Choppera</strong> - Costo Adicional
+        </label>
+    </div>
+
+    <div class="opcion-extra">
+        <input type="checkbox" id="extra_alergias_2" name="extras_alergias[]" value="alergias">
+        <label for="extra_alergias_2">
+            <strong>Menú de Tragos y Comidas para Personas con Alergias o Restricciones Alimentarias</strong> - Costo Adicional
+        </label>
+        <div class="sub-opcion" id="alergias_detalle_2" style="display: none;">
+            <label for="cant_alergias_2">Cantidad de platos/tragos especiales:</label>
+            <input type="number" id="cant_alergias_2" name="cant_alergias" min="1" placeholder="Ej: 5">
+            <small><i>*(Se sugiere 1 plato/trago especial por cada 10 invitados con restricciones)*</i></small>
+        </div>
+    </div>
+</fieldset>
+
+<script>
+    // Mostrar/ocultar el campo de cantidad cuando se selecciona la opción de alergias
+    const checkboxAlergias = document.getElementById('extra_alergias_2');
+    const detalleAlergias = document.getElementById('alergias_detalle_2');
+    const inputCantidad = document.getElementById('cant_alergias_2');
+
+    checkboxAlergias.addEventListener('change', function() {
+        if (this.checked) {
+            detalleAlergias.style.display = 'block';
+            inputCantidad.required = true;
+        } else {
+            detalleAlergias.style.display = 'none';
+            inputCantidad.value = '';
+            inputCantidad.required = false;
+        }
+    });
+</script>
+
+<fieldset>
+  <legend><strong>Detalles de pago y cotización:</strong></legend><br>
+
+  <label for="factura">Factura o Boleta:</label><br>
+  <input type="radio" id="factura" name="tipo_documento" value="Factura" required>
+  <label for="factura">Factura Electrónica</label><br>
+  <input type="radio" id="boleta" name="tipo_documento" value="Boleta" required>
+  <label for="boleta">Boleta Electrónica</label><br>
+
+<div class="cierre-resumen">
+    <div class="alerta-info">
+        <h4>¿Qué sucede al enviar esta solicitud?</h4>
+        <ul>
+            <li>Revisaremos la disponibilidad de personal para la fecha seleccionada.</li>
+            <li>Recibirás un desglose detallado de cotización en tu correo electrónico en formato PDF.</li>
+            <li>Tu reserva quedará confirmada únicamente tras la validación del anticipo.</li>
+            <li>En caso de cancelación, se aplicarán las políticas de devolución según el tipo de evento. Si la cancelación se realiza fuera del plazo establecido en el contrato, se le cobrará una penalidad.</li>
+        </ul>
+    </div>
+
+    <br>
+
+    <label for="terminos_simples">
+        <input type="checkbox" id="terminos_simples" name="terminos" required>
+        Acepto las condiciones generales del servicio Ecogarzones.
+    </label>
+
+    <br><br>
+
+<a href="confirmacion_solicitud.html" class="btn-solicitar" style="text-decoration: none;">
+    <i class="fas fa-check-circle"></i> Enviar Solicitud
+</a>
+</div>
+
+
+</body>
+</html>
+
+
+
+<script>
+  function evaluarCamposLegales() {
+    const empresarial = document.getElementById('tipo_empresarial').checked;
+    const municipal = document.getElementById('tipo_municipal').checked;
+    const seccionLegal = document.getElementById('seccion_legal');
+    const campoOC = document.getElementById('campo_oc');
+    const tituloLegal = document.getElementById('titulo_legal');
+
+    if (empresarial || municipal) {
+      seccionLegal.style.display = 'block';
+      
+      if (municipal) {
+        tituloLegal.innerText = "Datos de Transparencia y Facturación Municipal";
+        campoOC.style.display = 'block';
+      } else {
+        tituloLegal.innerText = "Datos de Facturación Corporativa";
+        campoOC.style.display = 'none';
+      }
+    } else {
+      seccionLegal.style.display = 'none';
+    }
+  }
+
+  function validarPersonal() {
+    const casillas = document.querySelectorAll('input[name="personal[]"]');
+    const msgError = document.getElementById('msg_error_personal');
+    let algunaMarcada = false;
+
+    casillas.forEach(c => {
+      if (c.checked) algunaMarcada = true;
+    });
+
+    if (!algunaMarcada) {
+      msgError.style.display = 'block';
+      return false;
+    } else {
+      msgError.style.display = 'none';
+      return true;
+    }
+  }
+
+      document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.location.href = 'servicio_solicitadoEcogarzones.html';
+      });
+
+</script>

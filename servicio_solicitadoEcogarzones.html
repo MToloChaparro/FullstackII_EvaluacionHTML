@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecogarzones · Solicitud Enviada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --verde-principal: #5a8a5a;
+            --verde-oscuro: #4a7a4a;
+            --verde-claro: #7aaa7a;
+            --verde-bg: #f0f5ed;
+            --fondo: #f9f7f5;
+            --texto-oscuro: #2d3a2d;
+            --texto-claro: #5a6a5a;
+            --blanco: #ffffff;
+            --gris-claro: #e8ece8;
+            --sombra: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --sombra-boton: 0 4px 15px rgba(90, 138, 90, 0.3);
+            --border-radius: 20px;
+            --border-radius-boton: 30px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--verde-bg) 0%, var(--verde-principal) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .confirmacion-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icono-check {
+            font-size: 4rem;
+            color: var(--verde-principal);
+            margin-bottom: 20px;
+            animation: popIn 0.5s ease 0.3s both;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--texto-oscuro);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .mensaje {
+            font-size: 16px;
+            color: var(--texto-claro);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .codigo-solicitud {
+            display: inline-block;
+            background: var(--verde-bg);
+            color: var(--verde-principal);
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .detalles-box {
+            background: var(--verde-bg);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .detalle-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .detalle-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detalle-item i {
+            color: var(--verde-principal);
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .detalle-texto {
+            flex: 1;
+            font-size: 14px;
+            color: var(--texto-claro);
+            line-height: 1.5;
+        }
+
+        .detalle-texto strong {
+            color: var(--texto-oscuro);
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .botones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-principal {
+            background: linear-gradient(135deg, var(--verde-principal), var(--verde-oscuro));
+            color: var(--blanco);
+            padding: 15px 30px;
+            border: none;
+            border-radius: var(--border-radius-boton);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-principal:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sombra-boton);
+        }
+
+        .btn-secundario {
+            background: transparent;
+            color: var(--verde-principal);
+            padding: 15px 30px;
+            border: 2px solid var(--verde-principal);
+            border-radius: var(--border-radius-boton);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-secundario:hover {
+            background: var(--verde-principal);
+            color: var(--blanco);
+            box-shadow: var(--sombra-boton);
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            height: 180px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confirmacion-card">
+        <div class="logo">
+            <img src="images/logoEcogarzones.png" alt="Ecogarzones">
+        </div>
+
+        <div class="icono-check">
+            <i class="fas fa-check-circle"></i>
+        </div>
+
+        <h1>¡Solicitud Enviada!</h1>
+
+        <p class="mensaje">
+            Tu solicitud de evento ha sido recibida correctamente.<br>
+            Nuestro equipo revisará los detalles y te contactará pronto.
+        </p>
+
+        <div class="codigo-solicitud">
+            <i class="fas fa-hashtag"></i> SOL-2026-XXXX
+        </div>
+
+        <div class="detalles-box">
+            <div class="detalle-item">
+                <i class="fas fa-envelope"></i>
+                <div class="detalle-texto">
+                    <strong>Correo:</strong> Te enviaremos un email con los detalles de cotización.
+                </div>
+            </div>
+            <div class="detalle-item">
+                <i class="fas fa-clock"></i>
+                <div class="detalle-texto">
+                    <strong>Tiempo de respuesta:</strong> 24-48 horas hábiles.
+                </div>
+            </div>
+            <div class="detalle-item">
+                <i class="fas fa-phone"></i>
+                <div class="detalle-texto">
+                    <strong>¿Dudas?</strong> Contáctanos al +569 7748 0467
+                </div>
+            </div>
+        </div>
+
+        <div class="botones">
+            <a href="index_Ecogarzones.html" class="btn-principal">
+                <i class="fas fa-home"></i> Volver al Inicio
+            </a>
+            <a href="pedirservicio.html" class="btn-secundario">
+                <i class="fas fa-plus-circle"></i> Nueva Solicitud
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

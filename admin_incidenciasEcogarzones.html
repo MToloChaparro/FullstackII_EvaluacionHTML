@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecogarzones · Panel Administrador - Incidencias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/adminEcogarzones.css" />
+    <style>
+        .incidencia-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .incidencia-ticket {
+            font-family: monospace;
+            font-size: 12px;
+            background: #f0f5ed;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid #d0ddd0;
+        }
+        
+        .categoria-logistica { background: #e3f2fd; color: #1565c0; }
+        .categoria-servicio { background: #fff3e0; color: #e65100; }
+        .categoria-personal { background: #f3e5f5; color: #7b1fa2; }
+        .categoria-tecnica { background: #e8f5e9; color: #2e7d32; }
+        .categoria-otros { background: #fce4ec; color: #c62828; }
+        
+        .prioridad-critica { background: #fce4ec; color: #c62828; border: 1px solid #f44336; }
+        .prioridad-alta { background: #fff3e0; color: #e65100; border: 1px solid #ff9800; }
+        .prioridad-media { background: #fff8e1; color: #f57f17; border: 1px solid #ffc107; }
+        .prioridad-baja { background: #e8f5e9; color: #2e7d32; border: 1px solid #4caf50; }
+        
+        .estado-pendiente { background: #fff3e0; color: #e65100; }
+        .estado-en-proceso { background: #e3f2fd; color: #1565c0; }
+        .estado-resuelto { background: #e8f5e9; color: #2e7d32; }
+        .estado-cancelado { background: #fce4ec; color: #c62828; }
+        
+        .costo-estimado {
+            font-weight: 700;
+            color: var(--verde-principal);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .incidencia-table td {
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        
+        .incidencia-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .comentario-box {
+            background: #f9f7f5;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--verde-principal);
+            font-size: 12px;
+            color: var(--texto-claro);
+        }
+        
+        .btn-icon:hover {
+            background: rgba(90, 138, 90, 0.1);
+        }
+        
+        .btn-resolver {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-resolver:hover {
+            background: #1b5e20;
+            box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+        }
+        
+        .btn-asignar {
+            background: #1565c0;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-asignar:hover {
+            background: #0d47a1;
+            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.3);
+        }
+        
+        .modal-content.modal-lg {
+            max-width: 900px;
+        }
+        
+        .incidencia-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .incidencia-detail-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            margin: 16px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--verde-bg);
+            padding-bottom: 6px;
+        }
+        
+        .incidencia-detail-section p {
+            font-size: 13px;
+            color: var(--texto-oscuro);
+            margin: 4px 0;
+            line-height: 1.6;
+        }
+        
+        .incidencia-detail-section p strong {
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="images/logoEcogarzones.png" alt="Ecogarzones" class="logoEcogarzones" />
+        <h2>Ecogarzones</h2>
+        <small>Panel de Administración</small>
+    </div>
+
+    <ul class="sidebar-menu">
+        <li>
+            <a href="adminEcogarzones.html">
+                Eventos
+            </a>
+        </li>
+        <li>
+            <a href="admin_inventarioEcogarzones.html">
+                Inventario
+            </a>
+        </li>
+        <li>
+            <a href="admin_personalEcogarzones.html">
+                Personal Disponible
+            </a>
+        </li>
+        <li>
+            <a href="admin_incidenciasEcogarzones.html" class="active">
+                Reporte de Incidencias
+            </a>
+        </li>
+        <li>
+            <a href="indexadmin_Ecogarzones.html">
+                Inicio
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <a href="LogEcogarzones.html">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+</aside>
+
+    <main class="main-content">
+
+        <header class="admin-header">
+            <div class="page-title">
+                <h1>Gestión de Incidencias</h1>
+                <p>Administra los reportes de incidencias de los eventos</p>
+            </div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchIncidencia" placeholder="Buscar incidencia..." onkeyup="filtrarIncidencias()" />
+                </div>
+                <div class="user-info">
+                    <div class="avatar">A</div>
+                    <div>
+                        <div class="user-name">Administrador</div>
+                        <div class="user-role">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fce4ec; color: #c62828;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalIncidencias">14</h3>
+                        <p>Total Incidencias</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fff3e0; color: #e65100;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="incidenciasPendientes">6</h3>
+                        <p>Pendientes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e3f2fd; color: #1565c0;">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="incidenciasEnProceso">2</h3>
+                        <p>En Proceso</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="incidenciasResueltas">6</h3>
+                        <p>Resueltas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-bar">
+                <div class="filters-left">
+                    <label for="filterCategoria">Categoría:</label>
+                    <select id="filterCategoria" onchange="filtrarIncidencias()">
+                        <option value="todos">Todas</option>
+                        <option value="LOGISTICA">Logística</option>
+                        <option value="SERVICIO">Servicio</option>
+                        <option value="PERSONAL">Personal</option>
+                        <option value="TECNICA">Técnica</option>
+                        <option value="OTROS">Otros</option>
+                    </select>
+
+                    <label for="filterPrioridad">Prioridad:</label>
+                    <select id="filterPrioridad" onchange="filtrarIncidencias()">
+                        <option value="todos">Todas</option>
+                        <option value="CRITICA">Crítica</option>
+                        <option value="ALTA">Alta</option>
+                        <option value="MEDIA">Media</option>
+                        <option value="BAJA">Baja</option>
+                    </select>
+
+                    <label for="filterEstadoIncidencia">Estado:</label>
+                    <select id="filterEstadoIncidencia" onchange="filtrarIncidencias()">
+                        <option value="todos">Todos</option>
+                        <option value="PENDIENTE">Pendiente</option>
+                        <option value="EN PROCESO">En Proceso</option>
+                        <option value="RESUELTO">Resuelto</option>
+                        <option value="CANCELADO">Cancelado</option>
+                    </select>
+                </div>
+                <div class="filters-right">
+                    <button class="btn-primary" onclick="exportarIncidencias()">
+                        <i class="fas fa-file-export"></i> Exportar
+                    </button>
+                    <button class="btn-secondary" onclick="recargarIncidencias()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="eventos-table incidencia-table" id="incidenciasTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Categoría</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Evento</th>
+                                <th>Costo Estimado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incidenciasBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <span>Mostrando <span id="inicioMostrar">1</span> - <span id="finMostrar">5</span> de <span id="totalMostrar">14</span> incidencias</span>
+                <div class="pagination-buttons">
+                    <button onclick="cambiarPagina('prev')" id="btnPrev" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="paginaActual">1</span>
+                    <button onclick="cambiarPagina('next')" id="btnNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div class="modal" id="detalleModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2><i class="fas fa-exclamation-circle"></i> Detalle de Incidencia</h2>
+                <button class="modal-close" onclick="cerrarDetalle()">&times;</button>
+            </div>
+            <div class="modal-body" id="detalleBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarDetalle()">Cerrar</button>
+                <button class="btn-primary" onclick="abrirResolver()" id="btnResolver">
+                    <i class="fas fa-check"></i> Resolver
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="resolverModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2><i class="fas fa-check-circle"></i> Resolver Incidencia</h2>
+                <button class="modal-close" onclick="cerrarResolver()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formResolver">
+                    <input type="hidden" id="resolverIncidenciaId" />
+                    <div class="form-group">
+                        <label for="resolverComentario">Comentario de Resolución:</label>
+                        <textarea id="resolverComentario" rows="4" placeholder="Describe cómo se resolvió la incidencia..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resolverCosto">Costo Final:</label>
+                        <input type="number" id="resolverCosto" placeholder="Ej: 50000" min="0" step="1000" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarResolver()">Cancelar</button>
+                <button class="btn-primary" onclick="guardarResolucion()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin_incidencias.js"></script>
+</body>
+</html>

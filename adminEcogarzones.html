@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecogarzones · Panel Administrador - Eventos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/adminEcogarzones.css" />
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="images/logoEcogarzones.png" alt="Ecogarzones" class="logoEcogarzones" />
+        <h2>Ecogarzones</h2>
+        <small>Panel de Administración</small>
+    </div>
+
+    <ul class="sidebar-menu">
+        <li>
+            <a href="adminEcogarzones.html" class="active">
+                Eventos
+            </a>
+        </li>
+        <li>
+            <a href="admin_inventarioEcogarzones.html">
+                Inventario
+            </a>
+        </li>
+        <li>
+            <a href="admin_personalEcogarzones.html">
+                Personal Disponible
+            </a>
+        </li>
+        <li>
+            <a href="admin_incidenciasEcogarzones.html">
+                Reporte de Incidencias
+            </a>
+        </li>
+        <li>
+            <a href="indexadmin_Ecogarzones.html">
+                Inicio
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <a href="LogEcogarzones.html">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+</aside>
+
+    <main class="main-content">
+
+        <header class="admin-header">
+            <div class="page-title">
+                <h1>Gestión de Eventos</h1>
+                <p>Administra todos los eventos solicitados en la plataforma</p>
+            </div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchEvento" placeholder="Buscar evento..." onkeyup="filtrarEventos()" />
+                </div>
+                <div class="user-info">
+                    <div class="avatar">A</div>
+                    <div>
+                        <div class="user-name">Administrador</div>
+                        <div class="user-role">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content">
+
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e3f2fd; color: #1565c0;">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalEventos">12</h3>
+                        <p>Total Eventos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="eventosConfirmados">5</h3>
+                        <p>Confirmados</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fff3e0; color: #e65100;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="eventosPendientes">4</h3>
+                        <p>Pendientes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fce4ec; color: #c62828;">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="eventosCancelados">3</h3>
+                        <p>Cancelados</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-bar">
+                <div class="filters-left">
+                    <label for="filterEstado">Filtrar por estado:</label>
+                    <select id="filterEstado" onchange="filtrarEventos()">
+                        <option value="todos">Todos</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmado">Confirmado</option>
+                        <option value="cancelado">Cancelado</option>
+                        <option value="finalizado">Finalizado</option>
+                    </select>
+
+                    <label for="filterTipo">Tipo de evento:</label>
+                    <select id="filterTipo" onchange="filtrarEventos()">
+                        <option value="todos">Todos</option>
+                        <option value="Familiar">Familiar / Particular</option>
+                        <option value="Empresarial">Empresarial / Corporativo</option>
+                        <option value="Municipal">Estatal / Municipal</option>
+                    </select>
+                </div>
+                <div class="filters-right">
+                    <button class="btn-primary" onclick="exportarReporte()">
+                        <i class="fas fa-file-export"></i> Exportar Reporte
+                    </button>
+                    <button class="btn-secondary" onclick="recargarDatos()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="eventos-table" id="eventosTable">
+                    <thead>
+                        <tr>
+                            <th>ID Evento</th>
+                            <th>Nombre del Evento</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Invitados</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventosBody">
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="pagination">
+                <span>Mostrando <span id="inicioMostrar">1</span> - <span id="finMostrar">5</span> de <span id="totalMostrar">12</span> eventos</span>
+                <div class="pagination-buttons">
+                    <button onclick="cambiarPagina('prev')" id="btnPrev" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="paginaActual">1</span>
+                    <button onclick="cambiarPagina('next')" id="btnNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div class="modal" id="detalleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> Detalle del Evento</h2>
+                <button class="modal-close" onclick="cerrarDetalle()">&times;</button>
+            </div>
+            <div class="modal-body" id="detalleBody">
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarDetalle()">Cerrar</button>
+                <button class="btn-primary" id="btnEditarEvento" onclick="editarEvento()">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editarModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Cambiar Estado</h2>
+                <button class="modal-close" onclick="cerrarEditar()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarEstado">
+                    <input type="hidden" id="editEventoId" />
+                    <div class="form-group">
+                        <label for="editEstado">Estado del Evento:</label>
+                        <select id="editEstado" required>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="confirmado">Confirmado</option>
+                            <option value="cancelado">Cancelado</option>
+                            <option value="finalizado">Finalizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editComentario">Comentario (opcional):</label>
+                        <textarea id="editComentario" rows="3" placeholder="Agrega un comentario sobre el cambio de estado..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarEditar()">Cancelar</button>
+                <button class="btn-primary" onclick="guardarCambiosEstado()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin_evento.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Registro de usuarios para Ecogarzones - Servicios sostenibles para eventos" />
+    <meta name="robots" content="noindex, nofollow" />
+    
+    <title>Ecogarzones · Registro de Usuario</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/LogEcogarzones.css" />
+    <link rel="stylesheet" href="css/ReguserEcogarzones.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="login-container">
+
+            <div class="logo-container">
+                <img 
+                    src="images/logoEcogarzones.png" 
+                    alt="Ecogarzones - Servicios sostenibles para eventos" 
+                    title="Ecogarzones"
+                    loading="lazy"
+                />
+            </div>
+
+            <h1>Crear Cuenta</h1>
+            <p class="subtitle">Completa tus datos para registrarte como cliente/administrador de Ecogarzones</p><br>
+
+            <form id="registerForm" novalidate autocomplete="on">
+
+                <div class="form-group">
+                    <label for="nombre">
+                        <i class="fas fa-user"></i> Nombre <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        placeholder="Ingresa tu nombre"
+                        maxlength="100"
+                        autocomplete="given-name"
+                        required
+                        aria-describedby="nombreError"
+                    />
+                    <div class="error-message" id="nombreError" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>El nombre es requerido y debe tener máximo 100 caracteres</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="apellidos">
+                        <i class="fas fa-user"></i> Apellidos <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="apellidos" 
+                        name="apellidos" 
+                        placeholder="Ingresa tus apellidos"
+                        maxlength="100"
+                        autocomplete="family-name"
+                        required
+                        aria-describedby="apellidosError"
+                    />
+                    <div class="error-message" id="apellidosError" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Los apellidos son requeridos y deben tener máximo 100 caracteres</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">
+                        <i class="fas fa-envelope"></i> Correo Electrónico <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="correo" 
+                        name="correo" 
+                        placeholder="ejemplo@gmail.cl / ejemplo@ecogarzones.cl"
+                        maxlength="100"
+                        autocomplete="email"
+                        required
+                        aria-describedby="correoError correoHint"
+                    />
+                    <div class="error-message" id="correoError" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Correo inválido. Solo se permiten "@gmail.com" y/o @ecogarzones.cl en caso de ser administrador </span>
+                    </div>
+                    <small class="field-hint" id="correoHint">
+                        <i class="fas fa-info-circle"></i> Solo se permiten "@gmail.com" y/o @ecogarzones.cl en caso de ser administrador
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Contraseña <span class="required">*</span>
+                    </label>
+                    <div class="password-toggle">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Mínimo 4 caracteres, máximo 10"
+                            minlength="4"
+                            maxlength="10"
+                            autocomplete="new-password"
+                            required
+                            aria-describedby="passwordError passwordHint"
+                        />
+                        <button 
+                            type="button" 
+                            class="toggle-btn" 
+                            id="togglePassword" 
+                            aria-label="Mostrar u ocultar contraseña"
+                            title="Mostrar contraseña"
+                        >
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="password-hint" id="passwordHint" role="status">
+                        <div class="hint-item" id="passwordLength">
+                            <i class="fas fa-times"></i>
+                            <span>Mínimo 4 caracteres</span>
+                        </div>
+                        <div class="hint-item" id="passwordMaxLength">
+                            <i class="fas fa-check"></i>
+                            <span>Máximo 10 caracteres</span>
+                        </div>
+                        <div class="hint-item" id="passwordUppercase">
+                            <i class="fas fa-times"></i>
+                            <span>Al menos 1 mayúscula</span>
+                        </div>
+                        <div class="hint-item" id="passwordNumber">
+                            <i class="fas fa-times"></i>
+                            <span>Al menos 1 número</span>
+                        </div>
+                    </div>
+                    
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    
+                    <div class="error-message" id="passwordError" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>La contraseña debe tener entre 4 y 10 caracteres</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-check-circle"></i> Confirmar Contraseña <span class="required">*</span>
+                    </label>
+                    <div class="password-toggle">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            name="confirmPassword" 
+                            placeholder="Repite tu contraseña"
+                            autocomplete="new-password"
+                            required
+                            aria-describedby="confirmPasswordError"
+                        />
+                        <button 
+                            type="button" 
+                            class="toggle-btn" 
+                            id="toggleConfirmPassword" 
+                            aria-label="Mostrar u ocultar contraseña"
+                            title="Mostrar contraseña"
+                        >
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="confirmPasswordError" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Las contraseñas no coinciden</span>
+                    </div>
+                </div>
+
+                <div class="terms-group">
+                    <input 
+                        type="checkbox" 
+                        id="terminos" 
+                        required 
+                        aria-describedby="terminosError"
+                    />
+                    <label for="terminos">
+                        Acepto los 
+                        <a href="#" onclick="abrirTerminos(); return false;" title="Ver términos y condiciones">
+                            términos y condiciones
+                        </a> 
+                        y la 
+                        <a href="#" onclick="abrirPrivacidad(); return false;" title="Ver política de privacidad">
+                            política de privacidad
+                        </a>
+                        <span class="required">*</span>
+                    </label>
+                </div>
+                <div class="error-message" id="terminosError" role="alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Debes aceptar los términos y condiciones</span>
+                </div>
+
+                <button type="submit" class="btn-register" id="btnRegister">
+                    <span class="spinner"><i class="fas fa-spinner"></i></span>
+                    <span class="btn-text">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </span>
+                </button>
+
+                <div class="success-message" id="successMessage" role="status">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>¡Registro exitoso!</h3>
+                    <p>Tu cuenta ha sido creada correctamente.</p>
+                    <p class="redirect-info">Serás redirigido al inicio de sesión...</p>
+                </div>
+            </form>
+
+            <div class="login-link">
+                <i class="fas fa-sign-in-alt"></i>
+                ¿Ya tienes una cuenta? 
+                <a href="LogEcogarzones.html">Inicia sesión aquí</a>
+                <br>
+                <a href="index_Ecogarzones.html" class="volver-inicio">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/registro.js"></script>
+</body>
+</html>

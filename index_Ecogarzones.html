@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="css/index_Ecogarzones.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecogarzones · GARZONES, BARTENDERS Y MÁS EN PERSONAL DE SERVICIO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    
+    <header class="header" id="header">
+        <div class="logo">
+            <img src="images\logoEcogarzones.png" sizes="200px" alt="Logo de Ecogarzones" />
+        </div>
+        <nav class="nav">
+            <a href="#servicios">Servicios</a>
+            <a href="#solicitar-evento">Solicitar</a>
+            <a href="#contacto">Contacto</a>
+            <a href="LogEcogarzones.html" class="btn-green btn-sm">
+                <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+            </a>
+        </nav>
+    </header>
+
+    <section class="logomain">
+        <img src="images/logoEcogarzones.png" alt="LogoEcogarzonesMain" />
+        <h2>Servicio Ecologico y <span>Amigable</span></h2>
+        <p>Transformamos tus eventos en experiencias sostenibles y memorables con un toque de frescura natural.</p>
+        <a href="#solicitar-evento" class="btn-green btn-lg">
+            ¡Hablemos de tu futura nueva experiencia!
+        </a>
+
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-seedling"></i>
+                <h4>Sostenibilidad</h4>
+                <p>Compromiso con el medio ambiente en cada servicio</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h4>Cuidado personal</h4>
+                <p>Atención cálida y personalizada para tus invitados</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-recycle"></i>
+                <h4>Cero desperdicio</h4>
+                <p>Gestión responsable de recursos e insumos</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="servicios">
+        <h2 class="section-title">Nuestros servicios</h2>
+        <p class="section-subtitle">En Ecogarzones, ofrecemos soluciones sostenibles y amigables para tus eventos, ya sean familiares, matrimonios, empresariales o eventos comunitarios.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-glass-cheers"></i>
+                <h3>Coctelería natural</h3>
+                <p>Ofrecemos servicios de cocteleria con la más amplia variedad de tragos; desde licores y vinos hasta opciones libres de alcohol</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Servicio ecológico</h3>
+                <p>Trabajamos con utensilios ecológicos y materiales biodegradables</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-tree"></i>
+                <h3>Eventos al aire libre</h3>
+                <p>En Ecogarzones trabajamos con versatibilidad para adaptarnos a cualquier entorno.</p>
+            </div>
+        <div class="service-card">
+                <i class="fas fa-users"></i>
+                <h3>Personal capacitado</h3>
+                <p>Nuestro personal está capacitado para brindar un servicio de calidad y atención al cliente excepcional. Trabajamos con garzones, bartender, animadores y demás.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="solicitar-evento" id="solicitar-evento">
+        <h2 class="section-title">Solicita tu evento</h2>
+        <p class="subtitle">Ingrese aquí para solicitar un evento.</p>
+        <a href="pedirservicio.html" class="btn-green btn-lg">
+            <i class="fas fa-sign-in-alt"></i> Solicitar evento
+        </a>
+        <p style="margin-top: 1rem; color: var(--texto-claro); font-size: 0.9rem;">
+            Antes de solicitar un evento, por favor <a href="LogEcogarzones.html" style="color: var(--verde-principal); font-weight: 600;">Inicia sesión aquí</a>
+        </p>
+    </section>
+
+    <footer class="footer" id="contacto">
+        <div class="socials">
+            <a href="https://www.instagram.com/ecogarzones/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.google.com/goto?url=CAESbwHrOzAV48ejurmv2AXJN9k6P-8-WC9NpvXi_9yLeC0SJ6yn8eXJm21aHe49jO2IjiNdh1GidgyfuXcUV2-TcF_OyisQcMbgNTd6GvLTsvij64hmjlQuWkRrmFcNeww3f7PSCl99ByLB2sbhJqbrng" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>
+            <strong>Ecogarzones</strong> · Servicios sostenibles ·
+            <a href="https://www.instagram.com/ecogarzones/" target="_blank">Instagram</a> ·
+            <a href="https://www.facebook.com/p/Ecogarzones-100087339230295/" target="_blank">Facebook</a> ·
+            Correo de Contacto: ecogarzones@gmail.com · Teléfono: +569 7748 0467
+        </p>
+        <p class="footer-text"> 2026 Ecogarzones · GARZONES, BARTENDERS Y MÁS EN PERSONAL DE SERVICIO</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
